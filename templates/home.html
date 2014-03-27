@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title> TownHall </title>
+</head>
+<body>
+    <form action="/" method="post">{% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit">
+    </form>
+</body>
+</html>

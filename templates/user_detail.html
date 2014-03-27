@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+{{ user.username }}
+{% for group in groups %}
+<div>
+    <h2>Group: <a href="/groups/{{ group.id }}/"> {{ group.name }} </a> </h2>
+
+</div>
+{% endfor %}
+</body>
+</html>
