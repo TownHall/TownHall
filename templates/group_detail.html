@@ -10,7 +10,7 @@
     {{ group.description }}
 </p>
 
-{% for pitch in group.pitch_set.all %}
+{% for pitch in group.pitch_set %}
     <h3>{{ pitch.title }}</h3> <a href="pitch/{{ pitch.id }}">View full pitch</a>
     <p> {{ pitch.text }}</p>
 {% endfor %}

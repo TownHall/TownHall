@@ -17,6 +17,7 @@ class home(View):
     def post(self, request):
         username = request.POST.get('username', '')
         password = request.POST.get('password', '')
+        print request.POST
         user = authenticate(username=username, password=password)
         if user.is_active:
             login(request, user)

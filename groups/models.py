@@ -25,6 +25,10 @@ class Vote(models.Model):
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey('content_type', 'object_id')
 
+    def save(self, *args, **kwargs):
+        super(Vote, self).save(*args, **kwargs)
+        self.content_object.calculate_votes()
+
 
 class Citation(models.Model):
     creator = models.ForeignKey(User)
@@ -43,7 +47,15 @@ class Comment(MP_Node):
     object_id = models.PositiveIntegerField(null=True)
     content_object = GenericForeignKey('content_type', 'object_id')
     votes = GenericRelation(Vote)
-    
+    upvotes = models.IntegerField(default=0)
+    downvotes = models.IntegerField(default=0)
+
+    def calculate_votes(self):
+        allvotes = self.votes.all()
+        self.upvotes = sum([x for x in allvotes if x.value == 1])
+        self.downvotes = sum([x for x in allvotes if x.value == 1])
+        self.save()
+
     def __unicode__(self):
         return self.text
 
@@ -57,15 +69,32 @@ class Pitch(models.Model):
     votes = GenericRelation(Vote)
     comments = GenericRelation(Comment)
     cites = GenericRelation(Citation)
+    upvotes = models.IntegerField(default=0)
+    downvotes = models.IntegerField(default=0)
+
+    def calculate_votes(self):
+        allvotes = self.votes.all()
+        self.upvotes = sum([x for x in allvotes if x.value == 1])
+        self.downvotes = sum([x for x in allvotes if x.value == 1])
+        self.save()
+
 
 class Proposal(models.Model):
     creator = models.ForeignKey(User)
+    pitch = models.ForeignKey(Pitch)
+
     title = models.CharField(max_length=200)
     text = models.TextField()
     date_created = models.DateTimeField(auto_now_add=True)
     votes = GenericRelation(Vote)
     comments = GenericRelation(Comment)
-
+    upvotes = models.IntegerField(default=0)
+    downvotes = models.IntegerField(default=0)
+    def calculate_votes(self):
+        allvotes = self.votes.all()
+        self.upvotes = sum([x for x in allvotes if x.value == 1])
+        self.downvotes = sum([x for x in allvotes if x.value == 1])
+        self.save()
 
 class CitationRequired(models.Model):
     creator = models.ForeignKey(User)
@@ -74,3 +103,4 @@ class CitationRequired(models.Model):
     content_type = models.ForeignKey(ContentType)
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey('content_type', 'object_id')
+

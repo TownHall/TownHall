@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ pitch.title }}</title>
+</head>
+<body>
+<h1>{{ pitch.title }}</h1>
+<p>{{ pitch.text }}</p>
+<h3>Comments</h3>
+{% for i in pitch.comments %}
+    {% if i.ind %}
+        <ul>
+    {% endif %}
+    {% if i.out %}
+        </ul>
+    {% endif %}
+
+    {% if i.text %}
+    <li>
+        <h1>{{ i.title }} </h1>
+        <div>{{ i.username }}, {{ i.date_created }} - {{ i.text }}</div>
+        <div><a href="/groups/{{ pitch.group }}/pitch/{{ pitch.id }}/comments/{{ i.id }}/reply">Reply</a></div>
+
+
+    </li>
+    {% endif %}
+{% endfor %}
+<a href="/groups/{{ pitch.group }}/pitch/{{ pitch.id }}/comments/new">New comment thread</a>
+<h3>Proposals</h3>
+{% for proposal in pitch.proposal_set %}
+    <h4>{{ proposal.title }}</h4>
+    <p>{{ proposal.text }}</p>
+{% endfor %}
+<a href="/groups/{{ pitch.group }}/pitch/{{ pitch.id }}/proposals/new">New Proposal</a>
+</body>
+</html>
