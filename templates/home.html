@@ -8,5 +8,15 @@
         {{ form.as_p }}
         <input type="submit">
     </form>
+    <h3> create your townhall account! </h3>
+    <form action="/users/create/" method="post"> {% csrf_token %}
+        <label for="username">Username: </label>
+        <input id="username" name="username">
+        <label for="password">Password: </label>
+        <input id="password" name="password">
+        <label for="email">Email: </label>
+        <input id="email" name="email">
+        <input type="submit">
+    </form>
 </body>
 </html>

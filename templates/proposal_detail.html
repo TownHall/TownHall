@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ proposal.title }}</title>
+</head>
+<body>
+<h1>{{ proposal.title }}</h1>
+<p>{{ proposal.text }}</p>
+<h2>Comments</h2>
+
+{% for i in proposal.comments %}
+    {% if i.ind %}
+        <ul>
+    {% endif %}
+    {% if i.out %}
+        </ul>
+    {% endif %}
+    {% if i.text %}
+    <li>
+        <h1>{{ i.title }} </h1>
+        <div>{{ i.username }}, {{ i.date_created }} - {{ i.text }}</div>
+        <div><a href="/groups/{{ pitch.group }}/pitch/{{ pitch.id }}/comments/{{ i.id }}/reply">Reply</a></div>
+    </li>
+    {% endif %}
+{% endfor %}
+
+</body>
+</html>

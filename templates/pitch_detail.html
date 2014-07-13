@@ -30,6 +30,8 @@
 {% for proposal in pitch.proposal_set %}
     <h4>{{ proposal.title }}</h4>
     <p>{{ proposal.text }}</p>
+    <div><a href="/groups/{{ pitch.group }}/pitch/{{ pitch.id }}/proposals/{{ proposal.id }}">Full Proposal</a>
+    </div>
 {% endfor %}
 <a href="/groups/{{ pitch.group }}/pitch/{{ pitch.id }}/proposals/new">New Proposal</a>
 </body>

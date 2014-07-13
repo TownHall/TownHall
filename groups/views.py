@@ -56,6 +56,22 @@ class GroupDetail(generics.RetrieveUpdateDestroyAPIView):
         return Response(serializer.data)
 
 
+class ProposalDetail(generics.RetrieveAPIView):
+    queryset = Proposal.objects.all()
+
+    serializer_class = ProposalSerializer
+    renderer_classes = (TemplateHTMLRenderer, JSONRenderer, BrowsableAPIRenderer)
+
+    def get(self, request, *args, **kwargs):
+        serializer = Proposal(Pitch.objects.get(pk=kwargs['pk']))
+        if self.request.accepted_renderer.format == 'html':
+            # we have to set unpack the tree structure here for the template
+            serializer.data['comments'] = RenderTree(serializer.data['comments'])
+            return Response({'proposal':serializer.data}, template_name='proposal_detail.html')
+
+        return Response(serializer.data)
+
+
 class UserDetail(generics.RetrieveUpdateDestroyAPIView):
     """
     Retrieve, update and destroy user object.
@@ -123,6 +139,8 @@ class GroupCreate(generics.CreateAPIView):
             if form.is_valid():
                 group = form.save(commit=False)
                 group.creator = request.user
+                group.save()
+                group.members.add(request.user)
                 group.save()
                 return redirect('/groups/' + str(group.id))
 

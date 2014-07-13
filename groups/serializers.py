@@ -5,15 +5,6 @@ from django.contrib.auth.models import User
 from fields import CommentsField
 
 
-class ProposalSerializer(serializers.ModelSerializer):
-    """
-    Serializer for the Proposal model.
-    """
-    class Meta:
-        model = Proposal
-        fields = ('creator', 'title', 'text', 'date_created', 'id')
-
-
 class CommentSerializer(serializers.ModelSerializer):
     """
     Serializer for the Comment model.
@@ -26,6 +17,17 @@ class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
         fields = ('creator', 'text', 'id')
+
+
+class ProposalSerializer(serializers.ModelSerializer):
+    """
+    Serializer for the Proposal model.
+    """
+    comments = CommentSerializer(many=True)
+
+    class Meta:
+        model = Proposal
+        fields = ('creator', 'title', 'text', 'date_created', 'id', 'comments')
 
 
 class PitchSerializer(serializers.ModelSerializer):
