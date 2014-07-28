@@ -1,8 +1,9 @@
 __author__ = 'daniel'
 from rest_framework import serializers
-from models import Group, Pitch, Proposal, Vote, Comment, Citation, CitationRequired
+from models import (
+    Group, Pitch, Proposal, Vote, Comment, Citation, CitationRequired
+)
 from django.contrib.auth.models import User
-from fields import CommentsField
 
 
 class CommentSerializer(serializers.ModelSerializer):
@@ -10,8 +11,9 @@ class CommentSerializer(serializers.ModelSerializer):
     Serializer for the Comment model.
     """
     def to_native(self, obj):
-        if not self.field_mapping.has_key('comments'):
-            self.field_mapping['comments'] = CommentSerializer(required=False, many=True)
+        if not 'comments' in self.field_mapping:
+            self.field_mapping['comments'] = CommentSerializer(required=False,
+                                                               many=True)
         return super(CommentSerializer, self).to_native(obj)
 
     class Meta:
@@ -27,7 +29,8 @@ class ProposalSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Proposal
-        fields = ('creator', 'title', 'text', 'date_created', 'id', 'comments')
+        fields = ('creator', 'title', 'text',
+                  'date_created', 'id', 'comments')
 
 
 class PitchSerializer(serializers.ModelSerializer):
@@ -37,13 +40,16 @@ class PitchSerializer(serializers.ModelSerializer):
     creator = serializers.SlugRelatedField(slug_field='username')
     comments = CommentSerializer(many=True)
     proposal_set = ProposalSerializer(many=True)
+
     class Meta:
         model = Pitch
-        fields = ('creator', 'group', 'date_created', 'text', 'title', 'comments', 'id', 'proposal_set')
+        fields = ('creator', 'group', 'date_created', 'text',
+                  'title', 'comments', 'id', 'proposal_set')
 
     def add_users(self, list, users):
         for i in list:
-            i['data']['username'] = users.get(pk=i['data']['creator']).username
+            i['data']['username'] = \
+                users.get(pk=i['data']['creator']).username
             i['data']['id'] = i['id']
             if 'children' in i.keys():
                 self.add_users(i['children'], users)
@@ -65,7 +71,8 @@ class GroupSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Group
-        fields = ('creator', 'name', 'description', 'members', 'pitch_set', 'id')
+        fields = ('creator', 'name', 'description', 'members',
+                  'pitch_set', 'id')
 
 
 class VoteSerializer(serializers.ModelSerializer):

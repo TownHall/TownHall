@@ -11,7 +11,7 @@ def populate_db():
     secsi.save()
     p1 = secsi.pitch_set.create(creator=chad, title='let\'s get a keg.', text="okay bros we " +
                                         "know we can't throw a rager and get all " +
-                                        "the tridelts over if we don't have a keg. " +
+                                        "the other bros over if we don't have a keg. " +
                                         "let's get a keg.")
     croot = Comment.add_root(creator=User.objects.all()[1], text='', content_object=p1)
     c1 = get(croot.pk).add_child(creator=brad, text='fuckkk bro i got so hammered at that ' +

@@ -24,27 +24,27 @@ urlpatterns = patterns('',
     url(r'^proposals/',
         views.ProposalList.as_view(),
         name='list-proposals'),
-
     url(r'^users/(?P<pk>[0-9]+)/$',
         views.UserDetail.as_view()),
     url(r'^users/create/$',
         UserCreate.as_view()),
-
     url(r'^pitch/(?P<pk>[0-9]+)/$',
         views.PitchDetail.as_view()),
-
-
     url(r'^groups/(?P<group_pk>[0-9]+)/pitch/(?P<pk>[0-9]+)$',
         views.PitchDetail.as_view()),
-    url(r'^groups/(?P<group_pk>[0-9]+)/pitch/(?P<pitch_pk>[0-9]+)/comments/(?P<pk>[0-9]+)/reply$',
+    url(r'^groups/(?P<group_pk>[0-9]+)/pitch/'
+        '(?P<pitch_pk>[0-9]+)/comments/(?P<pk>[0-9]+)/reply$',
         views.CommentCreate.as_view()),
-    url(r'^groups/(?P<group_pk>[0-9]+)/pitch/(?P<pitch_pk>[0-9]+)/comments/new$',
+    url(r'^groups/(?P<group_pk>[0-9]+)/pitch/(?P<pitch_pk>[0-9]+)/'
+        r'comments/new$',
         views.CommentCreate.as_view()),
     url(r'^groups/create/$',
         views.GroupCreate.as_view()),
-    url(r'^groups/(?P<group_pk>[0-9]+)/pitch/(?P<pitch_pk>[0-9]+)/proposals/new$',
+    url(r'^groups/(?P<group_pk>[0-9]+)/pitch/(?P<pitch_pk>[0-9]+)/'
+        r'proposals/new$',
         views.ProposalCreate.as_view()),
-    url(r'^groups/(?P<group_pk>[0-9]+)/pitch/(?P<pitch_pk>[0-9]+)/proposals/(?P<pk>[0-9]+)/$',
+    url(r'^groups/(?P<group_pk>[0-9]+)/pitch/(?P<pitch_pk>[0-9]+)/'
+        r'proposals/(?P<pk>[0-9]+)/$',
         views.ProposalDetail.as_view()),
 
 

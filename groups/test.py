@@ -13,7 +13,8 @@ class UserTests(APITestCase):
         Ensure we can create a user.
         """
         url = reverse('user-create')
-        data = {'username':'chet', 'password':'chet', 'email':'chet@chethall.com'}
+        data = {'username':'chet', 'password':'chet',
+                'email':'chet@chethall.com'}
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(response.data["username"], 'chet')

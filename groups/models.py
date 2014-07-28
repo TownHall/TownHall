@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.contrib.contenttypes.generic import GenericForeignKey, GenericRelation
+from django.contrib.contenttypes.generic import (
+    GenericForeignKey, GenericRelation
+)
 from django.contrib.contenttypes.models import ContentType
 from treebeard.mp_tree import MP_Node
 
@@ -90,11 +92,13 @@ class Proposal(models.Model):
     comments = GenericRelation(Comment)
     upvotes = models.IntegerField(default=0)
     downvotes = models.IntegerField(default=0)
+
     def calculate_votes(self):
         allvotes = self.votes.all()
         self.upvotes = sum([x for x in allvotes if x.value == 1])
         self.downvotes = sum([x for x in allvotes if x.value == 1])
         self.save()
+
 
 class CitationRequired(models.Model):
     creator = models.ForeignKey(User)
@@ -103,4 +107,3 @@ class CitationRequired(models.Model):
     content_type = models.ForeignKey(ContentType)
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey('content_type', 'object_id')
-

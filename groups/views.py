@@ -1,12 +1,19 @@
-from models import Group, Pitch, Proposal, Vote, Comment, Citation, CitationRequired
+from models import (
+    Group, Pitch, Proposal, Vote, Comment, Citation, CitationRequired
+)
 from rest_framework import generics, status
 from rest_framework.response import Response
-from serializers import UserSerializer, GroupSerializer, PitchSerializer, ProposalSerializer, VoteSerializer, CommentSerializer, CitationSerializer, CitationRequiredSerializer
+from serializers import (
+    UserSerializer, GroupSerializer, PitchSerializer, ProposalSerializer,
+    VoteSerializer, CommentSerializer, CitationSerializer,
+    CitationRequiredSerializer
+)
 from django.contrib.auth.models import User
 from rest_framework.views import APIView
 from rest_framework.authtoken.models import Token
-from django.contrib.auth import authenticate
-from rest_framework.renderers import TemplateHTMLRenderer, JSONRenderer, BrowsableAPIRenderer
+from rest_framework.renderers import (TemplateHTMLRenderer,
+    JSONRenderer, BrowsableAPIRenderer
+)
 from forms import PitchForm, CommentForm, GroupForm, ProposalForm
 from django.core.context_processors import csrf
 from django.shortcuts import render, redirect
@@ -45,14 +52,15 @@ class GroupDetail(generics.RetrieveUpdateDestroyAPIView):
     """
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
-    renderer_classes = (TemplateHTMLRenderer, JSONRenderer, BrowsableAPIRenderer)
+    renderer_classes = (TemplateHTMLRenderer, JSONRenderer,
+                        BrowsableAPIRenderer)
 
     def get(self, request, *args, **kwargs):
-
         self.object = self.get_object()
         serializer = GroupSerializer(self.object)
         if self.request.accepted_renderer.format == 'html':
-            return Response({'group':serializer.data}, template_name='group_detail.html')
+            return Response({'group': serializer.data},
+                            template_name='group_detail.html')
         return Response(serializer.data)
 
 
@@ -60,14 +68,17 @@ class ProposalDetail(generics.RetrieveAPIView):
     queryset = Proposal.objects.all()
 
     serializer_class = ProposalSerializer
-    renderer_classes = (TemplateHTMLRenderer, JSONRenderer, BrowsableAPIRenderer)
+    renderer_classes = (TemplateHTMLRenderer, JSONRenderer,
+                        BrowsableAPIRenderer)
 
     def get(self, request, *args, **kwargs):
         serializer = Proposal(Pitch.objects.get(pk=kwargs['pk']))
         if self.request.accepted_renderer.format == 'html':
             # we have to set unpack the tree structure here for the template
-            serializer.data['comments'] = RenderTree(serializer.data['comments'])
-            return Response({'proposal':serializer.data}, template_name='proposal_detail.html')
+            serializer.data['comments'] = RenderTree(
+                serializer.data['comments'])
+            return Response({'proposal': serializer.data},
+                            template_name='proposal_detail.html')
 
         return Response(serializer.data)
 
@@ -78,7 +89,8 @@ class UserDetail(generics.RetrieveUpdateDestroyAPIView):
     """
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    renderer_classes = (TemplateHTMLRenderer, JSONRenderer, BrowsableAPIRenderer)
+    renderer_classes = (TemplateHTMLRenderer, JSONRenderer,
+                        BrowsableAPIRenderer)
 
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -98,7 +110,8 @@ class CommentCreate(generics.CreateAPIView):
     create a reply comment..
     """
     serializer_class = CommentSerializer
-    renderer_classes = (TemplateHTMLRenderer, JSONRenderer, BrowsableAPIRenderer)
+    renderer_classes = (TemplateHTMLRenderer, JSONRenderer,
+                        BrowsableAPIRenderer)
 
     def get(self, request, *args, **kwargs):
         if self.request.accepted_renderer.format == 'html':
@@ -114,9 +127,12 @@ class CommentCreate(generics.CreateAPIView):
                 if kwargs.get('pk', '') != '':
                     parent = Comment.objects.get(pk=kwargs['pk'])
                 else:
-                    parent = Pitch.objects.get(pk=kwargs['pitch_pk']).comments.all()[0]
-                parent.add_child(text=form.cleaned_data['text'], creator=request.user)
-                return redirect('/groups/' + str(kwargs["group_pk"]) + "/pitch/" + str(kwargs['pitch_pk']))
+                    parent = Pitch.objects.get(pk=kwargs['pitch_pk'])\
+                        .comments.all()[0]
+                parent.add_child(text=form.cleaned_data['text'],
+                                 creator=request.user)
+                return redirect('/groups/' + str(kwargs["group_pk"]) +
+                                "/pitch/" + str(kwargs['pitch_pk']))
 
 
 class GroupCreate(generics.CreateAPIView):
@@ -124,7 +140,8 @@ class GroupCreate(generics.CreateAPIView):
     Create a group!
     """
     serializer_class = PitchSerializer
-    renderer_classes = (TemplateHTMLRenderer, JSONRenderer, BrowsableAPIRenderer)
+    renderer_classes = (TemplateHTMLRenderer, JSONRenderer,
+                        BrowsableAPIRenderer)
 
     def get(self, request, *arg, **kwargs):
         if self.request.accepted_renderer.format == 'html':
@@ -150,7 +167,8 @@ class ProposalCreate(generics.CreateAPIView):
     Create a proposal
     """
     serializer_class = ProposalSerializer
-    renderer_classes = (TemplateHTMLRenderer, JSONRenderer, BrowsableAPIRenderer)
+    renderer_classes = (TemplateHTMLRenderer, JSONRenderer,
+                        BrowsableAPIRenderer)
 
     def get(self, request, *arg, **kwargs):
         if self.request.accepted_renderer.format == 'html':
@@ -168,14 +186,16 @@ class ProposalCreate(generics.CreateAPIView):
                 proposal.creator = request.user
                 proposal.pitch = pitch
                 proposal.save()
-                return redirect('/groups/' + str(kwargs["group_pk"]) + "/pitch/" + str(kwargs['pitch_pk']))
+                return redirect('/groups/' + str(kwargs["group_pk"]) +
+                                "/pitch/" + str(kwargs['pitch_pk']))
 
 class PitchCreate(generics.CreateAPIView):
     """
     create a pitch.
     """
     serializer_class = PitchSerializer
-    renderer_classes = (TemplateHTMLRenderer, JSONRenderer, BrowsableAPIRenderer)
+    renderer_classes = (TemplateHTMLRenderer, JSONRenderer,
+                        BrowsableAPIRenderer)
 
     def get(self, request, *arg, **kwargs):
         if self.request.accepted_renderer.format == 'html':
@@ -196,18 +216,23 @@ class PitchCreate(generics.CreateAPIView):
                 pitch.creator = request.user
                 pitch.group_id = kwargs["group_pk"]
                 pitch.save()
-                Comment.add_root(creator=User.objects.all()[0], content_object=pitch, text='')
+                Comment.add_root(creator=User.objects.all()[0],
+                                 content_object=pitch, text='')
                 return redirect('/groups/' + str(kwargs["group_pk"]))
 
 class PitchDetail(APIView):
-    renderer_classes = (TemplateHTMLRenderer, JSONRenderer, BrowsableAPIRenderer)
+    renderer_classes = (TemplateHTMLRenderer, JSONRenderer,
+                        BrowsableAPIRenderer)
 
     def get(self, request, *args, **kwargs):
         serializer = PitchSerializer(Pitch.objects.get(pk=kwargs['pk']))
         if self.request.accepted_renderer.format == 'html':
             # we have to set unpack the tree structure here for the template
-            serializer.data['comments'] = RenderTree(serializer.data['comments'])
-            return Response({'pitch':serializer.data}, template_name='pitch_detail.html')
+            serializer.data['comments'] = RenderTree(
+                serializer.data['comments']
+            )
+            return Response({'pitch':serializer.data},
+                            template_name='pitch_detail.html')
 
         return Response(serializer.data)
 
