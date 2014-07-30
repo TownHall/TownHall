@@ -4,6 +4,9 @@
     <title> TownHall </title>
 </head>
 <body>
+    {% load staticfiles %}
+    <img src="{% static "img/THicon.png" %}" alt="TownHall"/>
+
     <form action="/" method="post">{% csrf_token %}
         {{ form.as_p }}
         <input type="submit">
