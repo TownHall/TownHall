@@ -67,7 +67,7 @@ class GroupSerializer(serializers.ModelSerializer):
     """
     Serializer for the group model.
     """
-    pitch_set = PitchSerializer(many=True)
+    pitch_set = PitchSerializer(many=True, blank=True)
 
     class Meta:
         model = Group

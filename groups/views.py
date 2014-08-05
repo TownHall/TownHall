@@ -17,7 +17,8 @@ from rest_framework.renderers import (TemplateHTMLRenderer,
 from forms import PitchForm, CommentForm, GroupForm, ProposalForm
 from django.core.context_processors import csrf
 from django.shortcuts import render, redirect
-
+from django.contrib.auth import authenticate
+from provider.oauth2.models import AccessToken
 
 class CreateUser(APIView):
     """
@@ -36,6 +37,20 @@ class CreateUser(APIView):
             # a bad status code. The examples show how to do this.
             # Stop being lazy.
             pass
+
+
+class UserLogin(APIView):
+    """
+    Allow user to login
+    """
+    def post(self, request):
+
+        user = authenticate(username=request.DATA["username"], password=request.DATA["password"])
+        if user.is_active:
+            tokens = AccessToken.objects.filter(user=user)
+            print tokens
+
+            return Response({'access_token': tokens[0].token})
 
 
 class GroupList(generics.ListCreateAPIView):
@@ -83,7 +98,7 @@ class ProposalDetail(generics.RetrieveAPIView):
         return Response(serializer.data)
 
 
-class UserDetail(generics.RetrieveUpdateDestroyAPIView):
+class UserDetails(generics.RetrieveUpdateDestroyAPIView):
     """
     Retrieve, update and destroy user object.
     """
@@ -93,14 +108,22 @@ class UserDetail(generics.RetrieveUpdateDestroyAPIView):
                         BrowsableAPIRenderer)
 
     def get(self, request, *args, **kwargs):
+        print "in a fucking view"
         self.object = self.get_object()
+        print "got a self object"
+        print self.object
+        print request.GET
+        print self.request.accepted_renderer.format
+
         if self.request.accepted_renderer.format == 'html':
             user = self.object
+            print 'in the wrong fucking codepath'
             groups = Group.objects.filter(members__id=user.id)
             return Response({'user': self.object,
                              'groups': groups},
                             template_name='user_detail.html')
         else:
+            print "in a fucking serializer"
             serializer = UserSerializer(self.object)
             return Response(serializer.data)
 
@@ -146,12 +169,12 @@ class GroupCreate(generics.CreateAPIView):
     def get(self, request, *arg, **kwargs):
         if self.request.accepted_renderer.format == 'html':
             form = GroupForm()
-            c = {'form':form}
+            c = {'form': form}
             c.update(csrf(request))
             return render(request, 'group_create.html', c)
 
-    def post(self, request, *args, **kwargs):
-        if self.request.accepted_renderer.format == 'html':
+    def post(self, request, format=None, *args, **kwargs):
+        if format == 'html' or format == None:
             form = GroupForm(request.POST)
             if form.is_valid():
                 group = form.save(commit=False)
@@ -160,6 +183,13 @@ class GroupCreate(generics.CreateAPIView):
                 group.members.add(request.user)
                 group.save()
                 return redirect('/groups/' + str(group.id))
+        elif format == 'json':
+            serializer = GroupSerializer(data=request.DATA)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            else:
+                return Response(serializer.errors)
 
 
 class ProposalCreate(generics.CreateAPIView):
@@ -220,6 +250,7 @@ class PitchCreate(generics.CreateAPIView):
                                  content_object=pitch, text='')
                 return redirect('/groups/' + str(kwargs["group_pk"]))
 
+
 class PitchDetail(APIView):
     renderer_classes = (TemplateHTMLRenderer, JSONRenderer,
                         BrowsableAPIRenderer)
@@ -231,10 +262,11 @@ class PitchDetail(APIView):
             serializer.data['comments'] = RenderTree(
                 serializer.data['comments']
             )
-            return Response({'pitch':serializer.data},
+            return Response({'pitch': serializer.data},
                             template_name='pitch_detail.html')
 
         return Response(serializer.data)
+
 
 class PitchView(APIView):
     def get(self, request, format=None):

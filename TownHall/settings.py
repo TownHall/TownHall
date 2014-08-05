@@ -42,6 +42,8 @@ INSTALLED_APPS = (
     'groups',
     'rest_framework',
     'rest_framework.authtoken',
+    'provider',
+    'provider.oauth2',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -91,5 +93,6 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.OAuth2Authentication',
     )
 }
