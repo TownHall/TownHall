@@ -1,10 +1,10 @@
 server {
-    server_name localhost;
+    server_name 162.243.151.209;
 
     access_log off;
 
     location /static/ {
-        alias ~/TownHall/static/;
+        alias ~/TownHall/TownHall/static/;
     }
 
     location / {
