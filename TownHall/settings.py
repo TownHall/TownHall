@@ -102,7 +102,7 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 )
 
-STATIC_ROOT = "~/TownHall/static"
+STATIC_ROOT = "~/TownHall/TownHall/static"
 
 
 REST_FRAMEWORK = {
