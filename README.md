@@ -27,3 +27,8 @@ To get the project running locally, execute the following steps:
      
 Alternatively, if you clone/pull/checkout the github files first, simply do steps 3-5, comment lines 31-32 and run 
      . ./startscript.sh
+     
+----------------     
+
+To access your the web app from a droplet, put in the address bar:
+     droplet.ip.address.here:8000
