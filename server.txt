@@ -1,5 +1,5 @@
 server {
-    server_name 162.243.151.209;
+    server_name yourdomainorip.com;
 
     access_log off;
 
