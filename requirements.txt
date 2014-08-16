@@ -1,5 +1,5 @@
 gunicorn
 django==1.6.5
-djangorestframewor
+djangorestframework
 django-treebeard
 django-oauth2-provider

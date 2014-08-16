@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from models import (
     Group, Pitch, Proposal, Vote, Comment, Citation, CitationRequired
 )
@@ -12,7 +14,7 @@ from django.contrib.auth.models import User
 from rest_framework.views import APIView
 from rest_framework.authtoken.models import Token
 from rest_framework.renderers import (TemplateHTMLRenderer,
-    JSONRenderer, BrowsableAPIRenderer
+                                      JSONRenderer, BrowsableAPIRenderer
 )
 from forms import PitchForm, CommentForm, GroupForm, ProposalForm
 from django.core.context_processors import csrf
@@ -20,10 +22,12 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate
 from provider.oauth2.models import AccessToken
 
+
 class CreateUser(APIView):
     """
     Create user...
     """
+
     def post(self, request):
         serializer = UserSerializer(data=request.DATA)
         if serializer.is_valid():
@@ -43,12 +47,13 @@ class UserLogin(APIView):
     """
     Allow user to login
     """
-    def post(self, request):
 
+    def post(self, request):
         user = authenticate(username=request.DATA["username"], password=request.DATA["password"])
         if user.is_active:
             tokens = AccessToken.objects.filter(user=user)
-            print tokens
+            print
+            tokens
 
             return Response({'access_token': tokens[0].token})
 
@@ -108,22 +113,29 @@ class UserDetails(generics.RetrieveUpdateDestroyAPIView):
                         BrowsableAPIRenderer)
 
     def get(self, request, *args, **kwargs):
-        print "in a fucking view"
+        print
+        "in a fucking view"
         self.object = self.get_object()
-        print "got a self object"
-        print self.object
-        print request.GET
-        print self.request.accepted_renderer.format
+        print
+        "got a self object"
+        print
+        self.object
+        print
+        request.GET
+        print
+        self.request.accepted_renderer.format
 
         if self.request.accepted_renderer.format == 'html':
             user = self.object
-            print 'in the wrong fucking codepath'
+            print
+            'in the wrong fucking codepath'
             groups = Group.objects.filter(members__id=user.id)
             return Response({'user': self.object,
                              'groups': groups},
                             template_name='user_detail.html')
         else:
-            print "in a fucking serializer"
+            print
+            "in a fucking serializer"
             serializer = UserSerializer(self.object)
             return Response(serializer.data)
 
@@ -150,7 +162,7 @@ class CommentCreate(generics.CreateAPIView):
                 if kwargs.get('pk', '') != '':
                     parent = Comment.objects.get(pk=kwargs['pk'])
                 else:
-                    parent = Pitch.objects.get(pk=kwargs['pitch_pk'])\
+                    parent = Pitch.objects.get(pk=kwargs['pitch_pk']) \
                         .comments.all()[0]
                 parent.add_child(text=form.cleaned_data['text'],
                                  creator=request.user)
@@ -219,6 +231,7 @@ class ProposalCreate(generics.CreateAPIView):
                 return redirect('/groups/' + str(kwargs["group_pk"]) +
                                 "/pitch/" + str(kwargs['pitch_pk']))
 
+
 class PitchCreate(generics.CreateAPIView):
     """
     create a pitch.
@@ -272,18 +285,20 @@ class PitchView(APIView):
     def get(self, request, format=None):
         pass
 
+
 def RenderTree(l):
     ret = []
     for i in l:
         if type(i) == list:
             ret = RenderTree(i)
         else:
-            ret.append({'ind':'<li>'})
+            ret.append({'ind': '<li>'})
             ret.append(i['data'])
             if 'children' in i.keys():
                 ret += RenderTree(i['children'])
-            ret.append({'out':'</li>'})
+            ret.append({'out': '</li>'})
     return ret
+
 
 class PitchList(generics.ListCreateAPIView):
     """

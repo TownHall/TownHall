@@ -1,8 +1,12 @@
+# -*- coding: utf-8 -*-
 __author__ = 'daniel'
+
 from rest_framework import serializers
 from groups.models import Pitch, Proposal, Comment
 import json
 from django.core.serializers.json import DjangoJSONEncoder
+
+
 class ObjectWithCitationRelatedField(serializers.RelatedField):
     """
     A custom field to use for the `tagged_object` generic relationship.

@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+__author__ = 'daniel'
+
 from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.generic import (

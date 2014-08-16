@@ -1,4 +1,6 @@
+# -*- coding: utf-8 -*-
 __author__ = 'daniel'
+
 from rest_framework import serializers
 from models import (
     Group, Pitch, Proposal, Vote, Comment, Citation, CitationRequired
@@ -10,6 +12,7 @@ class CommentSerializer(serializers.ModelSerializer):
     """
     Serializer for the Comment model.
     """
+
     def to_native(self, obj):
         if not 'comments' in self.field_mapping:
             self.field_mapping['comments'] = CommentSerializer(required=False,
@@ -53,14 +56,14 @@ class PitchSerializer(serializers.ModelSerializer):
             i['data']['id'] = i['id']
             if 'children' in i.keys():
                 self.add_users(i['children'], users)
+
     def to_native(self, obj):
         ret = super(PitchSerializer, self).to_native(obj)
-        for i,comment in enumerate(obj.comments.all()):
+        for i, comment in enumerate(obj.comments.all()):
             ret["comments"][i] = Comment.dump_bulk(comment)
             users = User.objects.all()
             self.add_users(ret["comments"][i], users)
         return ret
-
 
 
 class GroupSerializer(serializers.ModelSerializer):
@@ -79,6 +82,7 @@ class VoteSerializer(serializers.ModelSerializer):
     """
     Serializer for the Vote model.
     """
+
     class Meta:
         model = Vote
         fields = ('creator', 'value', 'content_object')
@@ -88,6 +92,7 @@ class CitationSerializer(serializers.ModelSerializer):
     """
     Serializer for the Citation model.
     """
+
     class Meta:
         model = Citation
         fields = ('creator', 'date_created', 'text', 'content_object')
@@ -97,14 +102,17 @@ class CitationRequiredSerializer(serializers.ModelSerializer):
     """
     Serializer for the CitationRequired model.
     """
+
     class Meta:
         model = CitationRequired
         fields = ('creator', 'date_created', 'text', 'content_object')
+
 
 class UserSerializer(serializers.ModelSerializer):
     """
     Serializer for the User model.
     """
+
     class Meta:
         model = User
         fields = ('username', 'email', 'password')
