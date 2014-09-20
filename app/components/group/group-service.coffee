@@ -13,10 +13,12 @@ Group = ($resource, Config) ->
       method: 'put'
     create: #make a new group, synonymouse with built in resource method `save`
       method: 'post'
-    members: #get a list of the members in a group
+    member:
       method: 'get'
       url: '/groups/:id/members/:memberId'
-      isArray: true
+    listMembers: #get a list of the members in a group
+      method: 'get'
+      url: '/groups/:id/members/:memberId'
     addMember: #add a user to a group as a member
       method: 'post'
       url: '/groups/:id/join'

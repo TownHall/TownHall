@@ -4,6 +4,7 @@ require 'angular-resource/angular-resource'
 require 'angular-route/angular-route'
 
 require './main/main-controller'
+require './group-info/group-info-controller'
 
 require './components/group/group-service'
 require './components/user/user-service'
@@ -20,6 +21,7 @@ angular
     'ngRoute'
     'ngResource'
     'townhall.main'
+    'townhall.group-info'
     'townhall.services.group'
     'townhall.services.user'
     'townhall.services.discussion'
