@@ -1,4 +1,4 @@
-# Represent.Us Web Project Template
+# TownHall Frontend
 
 **Install:**
 ```
