@@ -9,6 +9,10 @@ Group = ($resource, Config) ->
   ,
     list: #returns a list of groups, synonymous with built in resource method `query` but the response is NOT an array
       method: 'get'
+      transformResponse: (data, headersGetter) ->
+        return JSON.parse data
+          .groups
+      isArray: true
     edit: #edit a group
       method: 'put'
     create: #make a new group, synonymouse with built in resource method `save`

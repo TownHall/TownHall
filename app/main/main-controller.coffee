@@ -1,7 +1,7 @@
 MainCtrl = (Group) ->
   vm = @
-  vm.title = 'Welcome'
   vm.groups = Group.list()
+  return
 
 Config = ($routeProvider) ->
   $routeProvider

@@ -2,6 +2,7 @@ GroupInfoCtrl = ($routeParams, Group) ->
   vm = @
   vm.group = Group.get
     id: $routeParams.groupId
+  return
 
 Config = ($routeProvider) ->
   $routeProvider
