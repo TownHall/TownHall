@@ -56,6 +56,7 @@
     "jquery": "^2.1.1"
   },
   "napa": {
+    "foundation": "https://github.com/zurb/foundation.git",
     "normalize.scss": "https://github.com/hail2u/normalize.scss",
     "angular": "https://github.com/angular/bower-angular.git",
     "angular-resource": "https://github.com/angular/bower-angular-resource",
