@@ -1,5 +1,4 @@
 MainCtrl = ($scope) ->
-  $scope.hello = 'hey homes'
 
 Config = ($routeProvider) ->
   $routeProvider

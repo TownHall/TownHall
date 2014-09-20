@@ -53,10 +53,10 @@
     "vinyl-source-stream": "^0.1.0"
   },
   "dependencies": {
-    "jquery": "^2.1.0",
-    "normalize.css": "^3.0.1"
+    "jquery": "^2.1.1"
   },
   "napa": {
+    "normalize.scss": "https://github.com/hail2u/normalize.scss",
     "angular": "https://github.com/angular/bower-angular.git",
     "angular-resource": "https://github.com/angular/bower-angular-resource",
     "angular-route": "https://github.com/angular/bower-angular-route"

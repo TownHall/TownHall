@@ -14,3 +14,5 @@ gulp build
 ```
 gulp
 ```
+
+**Style guides**
