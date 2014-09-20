@@ -1,6 +1,7 @@
-MainCtrl = (Group) ->
+MainCtrl = (Group, User) ->
   vm = @
   vm.groups = Group.list()
+  vm.users = User.list()
   return
 
 Config = ($routeProvider) ->
