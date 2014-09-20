@@ -2,7 +2,9 @@
   <div class="small-12 columns">
     <h1>Users</h1>
     <ul>
-      <li ng-repeat="user in main.users">{{user.name}}</li>
+      <li ng-repeat="user in main.users">
+        <a href="" ng-href="#/user-info/{{user.id}}">{{user.name}}</a>
+      </li>
     </ul>
     <h1>Groups</h1>
     <ul>
