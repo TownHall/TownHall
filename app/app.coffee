@@ -28,3 +28,5 @@ angular
     'townhall.services.tag'
     'townhall.templates'
   ]
+  .constant 'Config',
+    apiURL: 'http://demo5905451.mockable.io'

@@ -1,6 +1,10 @@
 <div class="row">
   <div class="small-12 columns">
-    <h1>Main</h1>
-    <p>{{hello}}</p>
+    <h1>{{main.title}}</h1>
+    <ul>
+      <li ng-repeat="group in main.groups">
+        {{group.name}}
+      </li>
+    </ul>
   </div>
 </div>
