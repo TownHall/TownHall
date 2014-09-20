@@ -56,7 +56,9 @@
     "normalize.css": "^3.0.1"
   },
   "napa": {
-    "angular": "https://github.com/angular/bower-angular.git"
+    "angular": "https://github.com/angular/bower-angular.git",
+    "angular-resource": "https://github.com/angular/bower-angular-resource",
+    "angular-route": "https://github.com/angular/bower-angular-route"
   },
   "browserify": {
     "transform": [
