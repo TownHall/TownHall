@@ -63,7 +63,7 @@ gulp.task 'templates', ->
     './app/**/*.html'
   ]
     .pipe plugins.angularTemplatecache 'templates.js',
-      module: 'stownhall.templates'
+      module: 'townhall.templates'
       standalone: true
     .pipe gulp.dest './app'
     .pipe plugins.size

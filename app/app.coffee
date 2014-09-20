@@ -9,13 +9,9 @@ require './templates'
 
 
 angular
-  .module 'sc-unfollow-guide', [
+  .module 'townhall', [
     'ngRoute'
     'ngResource'
-    'sc-unfollow-guide.main'
-    'sc-unfollow-guide.services.soundcloud'
-    'sc-unfollow-guide.templates'
+    'townhall.main'
+    'townhall.templates'
   ]
-  .constant 'config', {
-    clientId: 'b7ce309058b352437aacb5e1fd78727a'
-  }
