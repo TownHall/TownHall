@@ -1,5 +1,0 @@
-gunicorn
-django==1.6.5
-djangorestframework
-django-treebeard
-django-oauth2-provider

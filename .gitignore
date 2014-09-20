@@ -1,0 +1,9 @@
+.sass-cache
+node_modules
+scripts/*.js
+!scripts/lib/*
+styles/*.css
+images/*
+!images/uncompressed/*
+partials/critical-css.php
+.DS_Store
