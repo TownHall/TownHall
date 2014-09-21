@@ -5,7 +5,13 @@ Login = (Auth) ->
   Login.templateUrl = 'components/login/login.html'
 
   Login.link = (scope, element, attrs) ->
-    return 'yisss'
+    scope.loggedIn = Auth.isAuthenticated()
+    scope.user = Auth.user
+    scope.login = (user, pass) ->
+      Auth.authenticate user, pass
+      scope.loggedIn = Auth.isAuthenticated()
+      scope.user = Auth.user
+    return
 
   return Login
 

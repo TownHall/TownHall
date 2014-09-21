@@ -1,0 +1,32 @@
+<div class="login">
+  <div ng-show="loggedIn">
+    <p>Hello {{user.name}}!</p>
+  </div>
+  <form ng-hide="loggedIn">
+    <div class="row">
+      <div class="small-12 medium-5 columns">
+        <div class="row">
+          <div class="small-12 medium-3 columns">
+            <label for="username" class="right inline">Username</label>
+          </div>
+          <div class="small-12 medium-9 columns">
+            <input type="text" placeholder="Username" id="username" name="username" ng-model="username">
+          </div>
+        </div>
+      </div>
+      <div class="small-12 medium-5 columns">
+        <div class="row">
+          <div class="small-12 medium-3 columns">
+            <label for="password" class="right inline">Password</label>
+          </div>
+          <div class="small-12 medium-9 columns">
+            <input type="password" placeholder="" id="password" name="password" ng-model="password">
+          </div>
+        </div>
+      </div>
+      <div class="small-12 medium-2 columns">
+        <button ng-click="login(username, password)">Login</button>
+      </div>
+    </div>
+  </form>
+</div>
