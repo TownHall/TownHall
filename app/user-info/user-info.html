@@ -1,5 +1,17 @@
 <div class="row">
   <div class="small-12 columns">
-    <h1>{{userInfo.user.id}} - {{userInfo.user.name}}</h1>
+    <ul ng-hide="userInfo.edit">
+      <li>id: {{userInfo.user.id}}</li>
+      <li>name: {{userInfo.user.name}}</li>
+      <li>bio: {{userInfo.user.bio}}</li>
+    </ul>
+    <ul ng-show="userInfo.edit">
+      <li>id: {{userInfo.user.id}}</li>
+      <li>name: <input ng-model="userInfo.user.name"></li>
+      <li>bio: <input ng-model="userInfo.user.bio"></li>
+      <button ng-click="save(userInfo.user)">save</button>
+      <button ng-click="userInfo.edit = false">cancel</button>
+    </ul>
+    <div ng-show="userInfo.user.id == userInfo.authUser.id && !userInfo.edit" class="editInfo"><a href="" ng-click="userInfo.edit = true">edit</a></div>
   </div>
 </div>

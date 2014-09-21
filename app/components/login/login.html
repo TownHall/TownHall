@@ -1,6 +1,6 @@
 <div class="login-form">
   <div class="logged-in-message" ng-show="loggedIn">
-    <p>Hello {{user.name}}!</p>
+    <p>Hello <a href="" ng-href="#/user-info/{{user.id}}">{{user.name}}</a>!</p>
   </div>
   <form ng-hide="loggedIn">
     <div class="row">

@@ -1,7 +1,15 @@
-UserInfoCtrl = ($routeParams, User) ->
+UserInfoCtrl = ($routeParams, $scope, User, Auth) ->
   vm = @
   vm.user = User.get
     id: $routeParams.userId
+  vm.authUser = Auth.user
+  vm.save = (user) ->
+    vm.edit = false
+    User.edit
+      id: user.id
+  $scope.$on 'authUser', (event, user) ->
+    console.log user
+    vm.authUser = user
   return
 
 Config = ($routeProvider) ->

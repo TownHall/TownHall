@@ -1,4 +1,4 @@
-Login = (Auth) ->
+Login = ($rootScope, Auth) ->
   Login = {}
   Login.restrict = 'E'
   Login.replace = true

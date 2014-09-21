@@ -1,13 +1,20 @@
 <div class="row">
   <div class="small-12 columns">
     <h1>{{groupInfo.group.name}}</h1>
+    <p><strong>group formed by <a href="" ng-href="#/user-info/{{groupInfo.group.creator.id}}">{{groupInfo.group.creator.name}}</a></strong></p>
     <div class="panel">
       {{groupInfo.group.description}}
     </div>
     <h2>Members:</h2>
     <ul class="member-list">
-      <li ng-repeat="member in groupInfo.group.members" ng-class="{creator: groupInfo.group.creator.name == member.name}">
+      <li ng-repeat="member in groupInfo.group.members" ng-class="{creator: groupInfo.group.creator.id == member.id}">
         <a href="" ng-href="#/user-info/{{member.id}}">{{member.name}}</a>
+      </li>
+    </ul>
+    <h2>Discussions:</h2>
+    <ul class="discussion-list">
+      <li ng-repeat="discussion in groupInfo.discussions">
+        <a href="" ng-href="#/discussion/{{discussion.id}}">{{discussion.title}}</a>
       </li>
     </ul>
   </div>

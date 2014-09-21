@@ -22,7 +22,8 @@ angular
             config.headers.Authorization = 'Bearer ' + Auth.token if Auth.token
             return config
         response: (res) ->
-          if res.status === 403
+          if res.status == 403
+            console.log 'gotta login to do this'
             #user not logged in, soooooo...?
             #probably tell the user that they tried to use an authenticated-only feature
           return res

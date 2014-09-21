@@ -1,7 +1,9 @@
-GroupInfoCtrl = ($routeParams, Group) ->
+GroupInfoCtrl = ($routeParams, Group, Discussion) ->
   vm = @
   vm.group = Group.get
     id: $routeParams.groupId
+  vm.discussions = Discussion.list
+    groupId: $routeParams.groupId
   return
 
 Config = ($routeProvider) ->

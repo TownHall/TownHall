@@ -1,6 +1,6 @@
 Discussion = ($resource, Config) ->
 
-  groupDiscussionEndpoint = '/group/:groupId/discussions'
+  groupDiscussionEndpoint = '/groups/:groupId/discussions'
   discussionEndpoint = '/discussion/:id'
   discussionCommentEndpoint = '/discussion/:id/comment'
 

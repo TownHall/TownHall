@@ -1,4 +1,4 @@
-Auth = ($http, Config) ->
+Auth = ($rootScope, $http, Config) ->
   Auth = {}
   Auth.user = false
   Auth.token = false
@@ -11,11 +11,12 @@ Auth = ($http, Config) ->
     #     Auth.token = res.data.token
 
     #for testing purposes, lets pretend we always log in correctly as devers talmage
-
     Auth.user =
-      id: 1
-      name: 'Devers Talmage'
+      id: 2
+      name: 'Chad Braddington'
+      bio: 'just wanna go surf'
     Auth.token = 'abc123'
+    $rootScope.$broadcast 'authUser', Auth.user
     return
 
   Auth.isAuthenticated = ->
