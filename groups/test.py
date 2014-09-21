@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 __author__ = 'daniel'
 
-
+import datetime
 from django.core.urlresolvers import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase, APIClient
 from django.contrib.auth.models import User
 from provider.oauth2.models import Client, AccessToken
-import datetime
+from models import Group
 
 class UserTests(APITestCase):
 
@@ -54,7 +54,7 @@ class UserTests(APITestCase):
 
         data = {
                 'creator': user.id, 'name': 'SECSI', 'description': 'SECSI DO YOU SPEAK IT?',
-                }
+        }
         response2 = self.client.post(url + ".json", data, format='json')
         self.assertEqual(response2.data["name"], "SECSI")
 
@@ -86,8 +86,10 @@ class GroupTests(APITestCase):
         self.client = APIClient()
 
         self.client.credentials(HTTP_AUTHORIZATION='Bearer ' + self.token.token)
-
-
+        self.group = Group.objects.create(creator=self.user,
+                                          name='the best group',
+                                          description='this is the best group',
+                                          )
     def test_create_group(self):
         """
         Ensure we can create a group.
@@ -97,3 +99,20 @@ class GroupTests(APITestCase):
                 'description': 'SECSI, DO YOU SPEAK IT', 'creator': self.user.id}
         response = self.client.post(url + ".json", data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+    def test_get_group_details(self):
+        """
+        Ensure we can get a group's details.
+        """
+        url = reverse('group-details', args=(self.group.id,))
+        response = self.client.get(url + ".json")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_list_groups(self):
+        """
+        List groups
+        """
+        url = reverse('groups-list')
+        response = self.client.get(url + ".json")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+

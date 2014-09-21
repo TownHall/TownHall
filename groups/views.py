@@ -73,7 +73,8 @@ class GroupDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
     renderer_classes = (TemplateHTMLRenderer, JSONRenderer,
-                        BrowsableAPIRenderer)
+                        BrowsableAPIRenderer
+    )
 
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()
