@@ -22,6 +22,8 @@ gulp.task 'browserify', ->
       '.json'
     ]
   .bundle()
+  .on 'error', (error) ->
+    console.log error
   .pipe plugins.plumber
     errorHandler: onError
   .pipe source 'app.js'
