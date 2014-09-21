@@ -6,7 +6,9 @@
     </div>
     <h2>Members:</h2>
     <ul class="member-list">
-      <li ng-repeat="member in groupInfo.group.members" ng-class="{creator: groupInfo.group.creator.name == member.name}">{{member.name}}</li>
+      <li ng-repeat="member in groupInfo.group.members" ng-class="{creator: groupInfo.group.creator.name == member.name}">
+        <a href="" ng-href="#/user-info/{{member.id}}">{{member.name}}</a>
+      </li>
     </ul>
   </div>
 </div>

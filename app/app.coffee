@@ -13,6 +13,10 @@ require './components/discussion/discussion-service'
 require './components/proposal/proposal-service'
 require './components/comment/comment-service'
 require './components/tag/tag-service'
+require './components/auth-interceptor/auth-interceptor-service'
+require './components/auth/auth-service'
+
+require './components/login/login-directive'
 
 require './templates'
 
@@ -30,6 +34,9 @@ angular
     'townhall.services.proposal'
     'townhall.services.comment'
     'townhall.services.tag'
+    'townhall.services.auth-interceptor'
+    'townhall.services.auth'
+    'townhall.directives.login'
     'townhall.templates'
   ]
   .constant 'Config',
