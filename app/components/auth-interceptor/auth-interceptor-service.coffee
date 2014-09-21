@@ -21,4 +21,9 @@ angular
             config.headers = config.headers or {}
             config.headers.Authorization = 'Bearer ' + Auth.token if Auth.token
             return config
+        response: (res) ->
+          if res.status === 403
+            #user not logged in, soooooo...?
+            #probably tell the user that they tried to use an authenticated-only feature
+          return res
       return AuthInterceptor

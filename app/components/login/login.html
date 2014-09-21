@@ -10,7 +10,7 @@
             <label for="username" class="right inline">Username</label>
           </div>
           <div class="small-12 medium-9 columns">
-            <input type="text" placeholder="Username" id="username" name="username" ng-model="username">
+            <input type="text" placeholder="Username" id="username" name="username" ng-model="creds.username">
           </div>
         </div>
       </div>
@@ -20,12 +20,12 @@
             <label for="password" class="right inline">Password</label>
           </div>
           <div class="small-12 medium-9 columns">
-            <input type="password" placeholder="" id="password" name="password" ng-model="password">
+            <input type="password" placeholder="" id="password" name="password" ng-model="creds.password">
           </div>
         </div>
       </div>
       <div class="small-12 medium-2 columns">
-        <button ng-click="login(username, password)">Login</button>
+        <button ng-click="login(creds.username, creds.password)">Login</button>
       </div>
     </div>
   </form>
